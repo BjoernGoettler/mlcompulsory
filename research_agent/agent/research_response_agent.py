@@ -1,16 +1,15 @@
+from research_agent.logging_configuration import setup_logging
+setup_logging()
 import logging
 from copy import deepcopy
 from typing import Final
 from autogen import ConversableAgent
 from research_agent.tools.query_tool import query_scholar
 from research_agent.config import LLM_CONFIG
-from research_agent.logging_configuration import setup_logging
 
-setup_logging(log_file="research_agent.log")
+
 
 logger = logging.getLogger(__name__)
-
-
 
 MANDATORY_QUERY: Final[str] = "Find a research paper on [topic] that was published [in/before/after] [year] and has [number of citations] citations."
 
@@ -81,7 +80,7 @@ def create_user_proxy():
         is_termination_msg=lambda msg: msg.get("content") is not None and "TERMINATE" in msg["content"],
         human_input_mode="ALWAYS",
     )
-    #user_proxy.register_for_execution(name="query_scholar")(query_scholar)
+    user_proxy.register_for_execution(name="query_scholar")(query_scholar)
     logger.info("User proxy created")
     return user_proxy
 
@@ -101,4 +100,10 @@ def main():
 
 if __name__ == "__main__":
     logger.info("Going off!")
-    main()
+    try:
+        main()
+    except Exception as e:
+        logger.error(f"Error: {e}")
+    finally:
+        logger.info("Shutting down")
+        logging.shutdown()
