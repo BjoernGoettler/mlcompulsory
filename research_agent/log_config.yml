@@ -10,9 +10,6 @@ root:
   handlers:
   - seq
   - console
-
-
-
 handlers:
 # Log to STDOUT
   console:
@@ -27,7 +24,7 @@ handlers:
     # Seq-specific settings (add any others you need, they're just kwargs for SeqLogHandler's constructor).
     server_url: 'http://localhost:5341'
     auto_flush_timeout: 10
-    batch_size: 5
+    batch_size: 1
 
     # Use a custom JSON encoder, if you need to.
     json_encoder_class: json.encoder.JSONEncoder
