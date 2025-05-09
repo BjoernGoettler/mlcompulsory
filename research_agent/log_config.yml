@@ -6,9 +6,9 @@ disable_existing_loggers: True
 
 # Configure the root logger to use Seq
 root:
-  level: DEBUG
+  level: INFO
   handlers:
-  - seq
+  #- seq
   - console
 handlers:
 # Log to STDOUT
