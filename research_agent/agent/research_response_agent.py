@@ -21,9 +21,6 @@ You will:
 3. Ask for minimum number of citations
 4. Use the query_scholar tool to search
 5. Present the results
-
-
-Format: "{MANDATORY_QUERY}"
 """
 
 
@@ -58,6 +55,11 @@ def create_research_agent() -> ConversableAgent:
                     2. Year preference (in/before/after)
                     3. Minimum citations
                     Use the query_scholar tool only after collecting all information.
+                    The tool returns a dictionary with the key "matches".
+                    The value is a list of dictionaries with the following keys: id, authorsYear, title
+                    Present the results in a human-readable format. With the title first, then the authorsYear.
+                    Sort the results descending by the year which is the last four digits of the authorsYear.
+                    
                     Return 'TERMINATE' after providing search results.""",
 
         llm_config=config,
@@ -87,7 +89,7 @@ def create_user_proxy():
 
 def main():
     logger.info("Starting research agent")
-    prompt = PROMPT_RESEARCH_QUERY
+    prompt = MANDATORY_QUERY
     research_agent = create_research_agent()
     user_proxy = create_user_proxy()
 
